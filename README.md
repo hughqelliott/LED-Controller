@@ -7,7 +7,7 @@ While the initial code is for a rainbow, the ATTiny85 can run nearly any code fo
 ### Contributions
    * Initial code and design: [Hugh Elliott](https://hughqelliott.com/blog)
    * PCB design: [Eugene Andruszczenko](https://github.com/EugeneAndruszczenko)
-   
+
 ### Versions of code
 ***
    Auto-divide rainbow *will take any length strip and attempt to divide into 6 equal amounts*
@@ -21,7 +21,7 @@ While the initial code is for a rainbow, the ATTiny85 can run nearly any code fo
    * Main handle
    * Handle bottom
    * Trigger
-   * ng Trigger holder
+   * Trigger holder
 
 ### Bill of Materials
 ***
