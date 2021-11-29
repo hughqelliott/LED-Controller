@@ -11,14 +11,14 @@ While the initial code is for a rainbow, the ATTiny85 can run nearly any code fo
    SCH and BRD files available
 
 ### STL files for handle
-   Main handle
-   Handle bottom
-   Trigger
-   Trigger holder
+   * Main handle
+   * Handle bottom
+   * Trigger
+   * Trigger holder
 
 ### Bill of Materials
-   12X12mm Tactile switch
-   M3 Heat Set Inserts
-   M3 screws
-   M5 screws
-   13X16.8mm Aluminum plywood edging
+   * 12X12mm Tactile switch
+   * M3 Heat Set Inserts
+   * M3 screws
+   * M5 screws
+   * 13X16.8mm Aluminum plywood edging
