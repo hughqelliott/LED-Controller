@@ -27,6 +27,8 @@ red, orange, yellow, green, blue, purple
 ----------*/
 int upsideDown = 1; // refers to which 'direction' the rainbow will be. 
                     // 1 had red closest to the handle, 0 purple is closest to the handle
+int colourCycle = 0; // click through available colours
+int cycleMax = 7; // maximum number of colours
 unsigned long buttonWaitAmnt = 0; // time in milliseconds to wait to check the loop
 
 unsigned long buttonAmnt = 100; // delay in milliseconds to add to the check
@@ -139,7 +141,37 @@ void loop() {
   int buttonState = digitalRead(BUTTON_PIN); // get switch state
   if(buttonState == HIGH && !checkState){ // if switch pressed and we didn't know it was pressed
     checkState = true; // we know the switch is pressed. avoids double calls
-    setRainbow(); // set the rainbow, turn on strip
+    switch(colourCycle){
+      case 0:
+      setRainbow(); // set the rainbow, turn on strip
+      break;
+      case 1:
+      setStripColour(white);
+      break;
+      case 2:
+      setStripColour(red);
+      break;
+      case 3:
+      setStripColour(orange);
+      break;
+      case 4:
+      setStripColour(yellow);
+      break;
+      case 5:
+      setStripColour(green);
+      break;
+      case 6:
+      setStripColour(blue);
+      break;
+      case 7:
+      setStripColour(purple);
+      break;
+    }
+    if(colourCycle<cycleMax){
+      colourCycle++;
+    }else{
+      colourCycle = 0;
+    }
   }else if(buttonState == LOW && checkState){ // if switch released and we didn't know
     checkState = false; // we know the switch is released. avoids double calls
   setStripColour(black); // turn off strip
