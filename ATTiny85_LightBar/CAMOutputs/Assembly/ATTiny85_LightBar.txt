@@ -1,0 +1,7 @@
+Partlist exported from /Users/hughelliott/Documents/ThinkingBox/Internal/Pride_LightBar/ATTiny85/Eagle_II/ATTiny85_LightBar.sch at 2021-11-01 2:07 PM
+
+Qty Value                   Device                  Package                     Parts  Description                          
+1   100 uF                  C-USC0805               C0805                       C1     CAPACITOR, American symbol           
+1   1000 uF                 CPOL-USE5-10.5          E5-10,5                     C3     POLARIZED CAPACITOR, American symbol 
+1   10k                     R-US_R0805              R0805                       R1     RESISTOR, American symbol            
+1   330                     R-US_R0805              R0805                       R2     RESISTOR, American symbol                
