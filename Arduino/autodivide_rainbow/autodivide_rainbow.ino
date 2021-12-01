@@ -5,7 +5,7 @@
 #endif
 #define BUTTON_PIN 4 // ATTiny85 pin 4 located left side 3rd from top
 #define LED_PIN 1 // ATTiny85 pin 1 located right side 3rd from top
-#define LED_COUNT 60 // Number of LEDs in the strip
+#define LED_COUNT 72 // Number of LEDs in the strip
 Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800); // Declare the strip
 
 /*----------
