@@ -5,7 +5,7 @@
 #endif
 #define BUTTON_PIN 4 // ATTiny85 pin 4 located left side 3rd from top
 #define LED_PIN 1 // ATTiny85 pin 1 located right side 3rd from top
-#define LED_COUNT 60 // Number of LEDs in the strip
+#define LED_COUNT 38 // Number of LEDs in the strip
 Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800); // Declare the strip
 
 /*----------
@@ -17,7 +17,7 @@ const auto orange =   Adafruit_NeoPixel::Color(235,45,0);
 const auto yellow =   Adafruit_NeoPixel::Color(180,100,0);
 const auto green  =   Adafruit_NeoPixel::Color(0,255,20);
 const auto blue   =   Adafruit_NeoPixel::Color(0,40,255);
-const auto purple =   Adafruit_NeoPixel::Color(100,0,255);
+const auto purple =   Adafruit_NeoPixel::Color(180,30,180);
 const auto white  =   Adafruit_NeoPixel::Color(50,50,50);
 const auto black  =   Adafruit_NeoPixel::Color(0,0,0);
 
@@ -25,10 +25,8 @@ const auto black  =   Adafruit_NeoPixel::Color(0,0,0);
 Pride rainbow flag colours (from top to bottom)
 red, orange, yellow, green, blue, purple
 ----------*/
-int upsideDown = 1; // refers to which 'direction' the rainbow will be. 
-                    // 1 had red closest to the handle, 0 purple is closest to the handle
 int colourCycle = 0; // click through available colours
-int cycleMax = 7; // maximum number of colours
+int cycleMax = 6; // maximum number of colours
 unsigned long buttonWaitAmnt = 0; // time in milliseconds to wait to check the loop
 
 unsigned long buttonAmnt = 100; // delay in milliseconds to add to the check
@@ -45,7 +43,6 @@ void setup() {
                               // The switch is connected to +5V between the resistor and pin.
                               // Switch pulls the pin HIGH when clicked.
   strip.begin(); // initialize the NeoPixel strip
-  setRainbow(); // divide the strip and set the pixel colours
   setStripColour(white); // solid colour to entire strip with a short delay
   delay(100);
   setStripColour(red);
@@ -63,58 +60,6 @@ void setup() {
   setStripColour(black); // turn off the strip
 }
 
-int divisible = 0; // number of pixels divided by 6. Evenly divide for the rainbow
-/*----------
-setRainbow function - no arguments passed
-  evenly divide the strip by 6
-  check if the rainbow is "upside down" or not
-  set the 6 colours
-  turn on the strip
-----------*/
-void setRainbow(){
-  divisible = LED_COUNT/6;
-    int i=0;
-    if(upsideDown == 0){
-    for(i=0; i<divisible; i++) {
-      strip.setPixelColor(i,purple);
-    }
-    for(i=divisible; i<divisible*2; i++) {
-      strip.setPixelColor(i,blue);
-    }
-    for(i=divisible*2; i<divisible*3; i++) {
-      strip.setPixelColor(i,green);
-    }
-    for(i=divisible*3; i<divisible*4; i++) {
-      strip.setPixelColor(i,yellow);
-    }
-    for(i=divisible*4; i<divisible*5; i++) {
-      strip.setPixelColor(i,orange);
-    }
-    for(i=divisible*5; i<divisible*6; i++) {
-     strip.setPixelColor(i,red);
-    }
-    }else{
-    for(i=0; i<divisible; i++) {
-      strip.setPixelColor(i,red);
-    }
-    for(i=divisible; i<divisible*2; i++) {
-      strip.setPixelColor(i,orange);
-    }
-    for(i=divisible*2; i<divisible*3; i++) {
-      strip.setPixelColor(i,yellow);
-    }
-    for(i=divisible*3; i<divisible*4; i++) {
-      strip.setPixelColor(i,green);
-    }
-    for(i=divisible*4; i<divisible*5; i++) {
-      strip.setPixelColor(i,blue);
-    }
-    for(i=divisible*5; i<divisible*6; i++) {
-     strip.setPixelColor(i,purple);
-    }
-    }
-    strip.show();
-}
 /*----------
 setButtonPause function - no arguments passed
   reset the wait time buttonWaitAmnt, in milliseconds millis()
@@ -143,27 +88,24 @@ void loop() {
     checkState = true; // we know the switch is pressed. avoids double calls
     switch(colourCycle){
       case 0:
-      setRainbow(); // set the rainbow, turn on strip
-      break;
-      case 1:
       setStripColour(white);
       break;
-      case 2:
+      case 1:
       setStripColour(red);
       break;
-      case 3:
+      case 2:
       setStripColour(orange);
       break;
-      case 4:
+      case 3:
       setStripColour(yellow);
       break;
-      case 5:
+      case 4:
       setStripColour(green);
       break;
-      case 6:
+      case 5:
       setStripColour(blue);
       break;
-      case 7:
+      case 6:
       setStripColour(purple);
       break;
     }

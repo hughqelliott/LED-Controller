@@ -21,12 +21,6 @@ const auto purple =   Adafruit_NeoPixel::Color(100,0,255);
 const auto white  =   Adafruit_NeoPixel::Color(50,50,50);
 const auto black  =   Adafruit_NeoPixel::Color(0,0,0);
 
-/*----------
-Pride rainbow flag colours (from top to bottom)
-red, orange, yellow, green, blue, purple
-----------*/
-int upsideDown = 1; // refers to which 'direction' the rainbow will be. 
-                    // 1 had red closest to the handle, 0 purple is closest to the handle
 int colourCycle = 0; // click through available colours
 int cycleMax = 7; // maximum number of colours
 unsigned long buttonWaitAmnt = 0; // time in milliseconds to wait to check the loop
@@ -45,7 +39,6 @@ void setup() {
                               // The switch is connected to +5V between the resistor and pin.
                               // Switch pulls the pin HIGH when clicked.
   strip.begin(); // initialize the NeoPixel strip
-  setRainbow(); // divide the strip and set the pixel colours
   setStripColour(white); // solid colour to entire strip with a short delay
   delay(100);
   setStripColour(red);
@@ -63,58 +56,6 @@ void setup() {
   setStripColour(black); // turn off the strip
 }
 
-int divisible = 0; // number of pixels divided by 6. Evenly divide for the rainbow
-/*----------
-setRainbow function - no arguments passed
-  evenly divide the strip by 6
-  check if the rainbow is "upside down" or not
-  set the 6 colours
-  turn on the strip
-----------*/
-void setRainbow(){
-  divisible = LED_COUNT/6;
-    int i=0;
-    if(upsideDown == 0){
-    for(i=0; i<divisible; i++) {
-      strip.setPixelColor(i,purple);
-    }
-    for(i=divisible; i<divisible*2; i++) {
-      strip.setPixelColor(i,blue);
-    }
-    for(i=divisible*2; i<divisible*3; i++) {
-      strip.setPixelColor(i,green);
-    }
-    for(i=divisible*3; i<divisible*4; i++) {
-      strip.setPixelColor(i,yellow);
-    }
-    for(i=divisible*4; i<divisible*5; i++) {
-      strip.setPixelColor(i,orange);
-    }
-    for(i=divisible*5; i<divisible*6; i++) {
-     strip.setPixelColor(i,red);
-    }
-    }else{
-    for(i=0; i<divisible; i++) {
-      strip.setPixelColor(i,red);
-    }
-    for(i=divisible; i<divisible*2; i++) {
-      strip.setPixelColor(i,orange);
-    }
-    for(i=divisible*2; i<divisible*3; i++) {
-      strip.setPixelColor(i,yellow);
-    }
-    for(i=divisible*3; i<divisible*4; i++) {
-      strip.setPixelColor(i,green);
-    }
-    for(i=divisible*4; i<divisible*5; i++) {
-      strip.setPixelColor(i,blue);
-    }
-    for(i=divisible*5; i<divisible*6; i++) {
-     strip.setPixelColor(i,purple);
-    }
-    }
-    strip.show();
-}
 /*----------
 setButtonPause function - no arguments passed
   reset the wait time buttonWaitAmnt, in milliseconds millis()
@@ -135,45 +76,58 @@ void setStripColour(uint32_t colour){
     }
     strip.show();
 }
+int increment = 0;
+int incrementmax = 30; //number of increments needed to get from one colour to another
+void changeStripColour(int startr, int endr, int startg, int endg, int startb, int endb){
+  int r = map(increment, 0,incrementmax,startr,endr);
+  int g = map(increment, 0,incrementmax,startg,endg);
+  int b = map(increment, 0,incrementmax,startb,endb);
+  uint32_t currentColour = Adafruit_NeoPixel::Color(r, g, b);
+  setStripColour(currentColour);
+}
 boolean checkState = false; // switch on off if off set to false if on set to true
 void loop() {
     if(millis() > buttonWaitAmnt){ // check wait
   int buttonState = digitalRead(BUTTON_PIN); // get switch state
-  if(buttonState == HIGH && !checkState){ // if switch pressed and we didn't know it was pressed
-    checkState = true; // we know the switch is pressed. avoids double calls
+  if(buttonState == HIGH){ // if switch pressed
+    checkState = true; // we know the switch is pressed. 
     switch(colourCycle){
       case 0:
-      setRainbow(); // set the rainbow, turn on strip
+      changeStripColour(0,50,0,50,0,50);
       break;
       case 1:
-      setStripColour(white);
+      changeStripColour(50,255,50,0,50,0);
       break;
       case 2:
-      setStripColour(red);
+      changeStripColour(255,235,0,45,50,0);
       break;
       case 3:
-      setStripColour(orange);
+      changeStripColour(235,180,45,100,0,0);
       break;
       case 4:
-      setStripColour(yellow);
+      changeStripColour(180,0,45,255,0,20);
       break;
       case 5:
-      setStripColour(green);
+      changeStripColour(0,0,255,40,20,255);
       break;
       case 6:
-      setStripColour(blue);
+      changeStripColour(0,100,40,0,255,255);
       break;
       case 7:
-      setStripColour(purple);
+      changeStripColour(100,0,0,0,255,0);
       break;
     }
+    if(increment < incrementmax){
+      increment++;
+    }
+  }else if(buttonState == LOW && checkState){ // if switch released and we didn't know
+    checkState = false; // we know the switch is released. avoids double calls
     if(colourCycle<cycleMax){
       colourCycle++;
     }else{
       colourCycle = 0;
     }
-  }else if(buttonState == LOW && checkState){ // if switch released and we didn't know
-    checkState = false; // we know the switch is released. avoids double calls
+    increment = 0; //reset the transition increment
   setStripColour(black); // turn off strip
   }
   setButtonPause(); // reset the timer
