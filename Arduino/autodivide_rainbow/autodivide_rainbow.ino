@@ -1,4 +1,3 @@
-
 #include <Adafruit_NeoPixel.h> // NeoPixel library https://www.arduino.cc/en/guide/libraries
 #ifdef __AVR__
  #include <avr/power.h> // Required for 16 MHz Adafruit Trinket
@@ -12,14 +11,14 @@ Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800); // Declare th
 Colour values with named colours for ease of use
 when making your own you can change these colours as you like or make new ones.
 ----------*/
-const auto red    =   Adafruit_NeoPixel::Color(255, 0, 0);
-const auto orange =   Adafruit_NeoPixel::Color(235,45,0);
-const auto yellow =   Adafruit_NeoPixel::Color(180,100,0);
-const auto green  =   Adafruit_NeoPixel::Color(0,255,20);
-const auto blue   =   Adafruit_NeoPixel::Color(0,40,255);
-const auto purple =   Adafruit_NeoPixel::Color(100,0,255);
-const auto white  =   Adafruit_NeoPixel::Color(50,50,50);
-const auto black  =   Adafruit_NeoPixel::Color(0,0,0);
+static uint32_t red    =   Adafruit_NeoPixel::Color(255, 0, 0);
+static uint32_t orange =   Adafruit_NeoPixel::Color(235,45,0);
+static uint32_t yellow =   Adafruit_NeoPixel::Color(180,100,0);
+static uint32_t green  =   Adafruit_NeoPixel::Color(0,255,20);
+static uint32_t blue   =   Adafruit_NeoPixel::Color(0,40,255);
+static uint32_t purple =   Adafruit_NeoPixel::Color(100,0,255);
+static uint32_t white  =   Adafruit_NeoPixel::Color(50,50,50);
+static uint32_t black  =   Adafruit_NeoPixel::Color(0,0,0);
 
 /*----------
 Pride rainbow flag colours (from top to bottom)
